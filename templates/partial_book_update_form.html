@@ -6,29 +6,29 @@
 
 	<!-- Ячейка названия книги -->
 	<td>
-		{{ book.title }}
+		{{ form.title }}
 	</td>
 
 	<!-- Ячейка автора книги -->
 	<td>
-		{{ book.author }}
+		{{ form.author }}
 	</td>
 
 	<!-- Ячейка цены книги -->
 	<td>
-		{{ book.price }}
+		{{ form.price }}
 	</td>
 
 	<!-- Ячейка состояния -->
 	<td>
 		{% if not book.read %}
 			<!-- Кнопка "Unread" -->
-			<button class="disbtn">
+			<button disabled>
 				Unread
 			</button>
 		{% else %}
 			<!-- Кнопка "Read" -->
-			<button class="disbtn">
+			<button disabled>
 				Read
 			</button>
 		{% endif %}
@@ -36,17 +36,19 @@
 
 	<!--  Ячейка кнопок действия -->
 	<td>
-		<!-- Кнопка "Edit" -->
-		<button class="disbtn"
-		        hx-put="{% url 'update_book_details' book.id %}"
+		<!-- Кнопка "Save" -->
+		<button type="submit"
+		        hx-post="{% url 'update_book_details' book.id %}"
+		        hx-target="closest tr"
+		        hx-swap="outerHTML"
+		        hx-include="closest tr">
+			Save
+		</button>
+		<!-- Кнопка "Cancel" -->
+		<button hx-get="{% url 'book_detail' book.id %}"
 		        hx-target="closest tr"
 		        hx-swap="outerHTML">
-			Edit
-		</button>
-
-		<!-- Кнопка "Delete" -->
-		<button class="disbtn">
-			Delete
+			Cancel
 		</button>
 	</td>
 </tr>

@@ -12,63 +12,64 @@
 		<div>
 			<!-- Таблица книг -->
 			{% include "partial_create_book_form.html" %}
+			<form>
+				<table>
+					<thead>
+					<tr>
+						<!-- Заголовки столбцов таблицы -->
 
-			<table>
-				<thead>
-				<tr>
-					<!-- Заголовки столбцов таблицы -->
+						<!-- Заголовок номера книги -->
+						<th scope="col" style="width: 10%">
+							<small>
+								Num.
+							</small>
+						</th>
 
-					<!-- Заголовок номера книги -->
-					<th scope="col" style="width: 10%">
-						<small>
-							Num.
-						</small>
-					</th>
+						<!-- Заголовок названия книги -->
+						<th scope="col" style="width: 26%">
+							<small>
+								Title
+							</small>
+						</th>
 
-					<!-- Заголовок названия книги -->
-					<th scope="col" style="width: 26%">
-						<small>
-							Title
-						</small>
-					</th>
+						<!-- Заголовок автора книги -->
+						<th scope="col" style="width: 26%">
+							<small>
+								Author
+							</small>
+						</th>
 
-					<!-- Заголовок автора книги -->
-					<th scope="col" style="width: 26%">
-						<small>
-							Author
-						</small>
-					</th>
+						<!-- Заголовок цены книги -->
+						<th scope="col" style="width: 11%">
+							<small>
+								Price ($)
+							</small>
+						</th>
 
-					<!-- Заголовок цены книги -->
-					<th scope="col" style="width: 11%">
-						<small>
-							Price ($)
-						</small>
-					</th>
+						<!-- Заголовок статуса книги -->
+						<th scope="col" style="width: 11%">
+							<small>
+								Status
+							</small>
+						</th>
 
-					<!-- Заголовок статуса книги -->
-					<th scope="col" style="width: 11%">
-						<small>
-							Status
-						</small>
-					</th>
+						<!-- Заголовок кнопок действия -->
+						<th scope="col" style="width: 16%">
+							<small>
+								Actions
+							</small>
+						</th>
 
-					<!-- Заголовок кнопок действия -->
-					<th scope="col" style="width: 16%">
-						<small>
-							Actions
-						</small>
-					</th>
+					</tr>
+					</thead>
 
-				</tr>
-				</thead>
+					<!-- Список книг -->
+					<tbody id="book-list">
+					{% include "partial_book_list.html" %}
+					</tbody>
 
-				<!-- Список книг -->
-				<tbody id="book-list">
-				{% include "partial_book_list.html" %}
-				</tbody>
-
-			</table>
+				</table>
+			</form>
 		</div>
 	</div>
 </div>
@@ -86,6 +87,29 @@
         path_str = event.detail.pathInfo.requestPath;
         if (path_str.includes('create_book')) {
             cngElementsAtr('clrtxt', 'value', '');
+        }
+    });
+</script>
+<script>
+    function cngElementsAtr(cls, atr, val) {
+        var elems = document.getElementsByClassName(cls);
+        for (var i = 0; i < elems.length; i++) {
+            elems[i][atr] = val;
+        }
+    }
+
+    document.body.addEventListener('htmx:afterRequest', (event) => {
+        path_str = event.detail.pathInfo.requestPath;
+        if (path_str.includes('create_book')) {
+            cngElementsAtr('clrtxt', 'value', '');
+        } else if (path_str.includes('update_book_details')) {
+            if (event.detail.requestConfig.verb === 'put') {
+                cngElementsAtr('disbtn', 'disabled', true);
+            } else {
+                cngElementsAtr('disbtn', 'disabled', false);
+            }
+        } else if (path_str.includes('book_detail')) {
+            cngElementsAtr('disbtn', 'disabled', false);
         }
     });
 </script>
