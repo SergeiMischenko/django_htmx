@@ -1,20 +1,26 @@
 <form>
-    <div>
-        <div>
-            {{ form.title }}
-        </div>
+	<div>
+		<div>
+			{{ form.title }}
+		</div>
 
-        <div>
-            {{ form.author }}
-        </div>
+		<div>
+			{{ form.author }}
+		</div>
 
-        <div>
-            {{ form.price }}
-        </div>
+		<div>
+			{{ form.price }}
+		</div>
 
-        <div>
-            <!-- Кнопка "Add book" -->
-            <button type="submit" class="disbtn"> Add book</button>
-        </div>
-    </div>
+		<div>
+			<!-- Кнопка "Add book" -->
+			<button type="submit"
+			        class="disbtn"
+			        hx-post="{% url 'create_book' %}"
+			        hx-target="#book-list"
+			        hx-swap="beforeend">
+				Add book
+			</button>
+		</div>
+	</div>
 </form>
