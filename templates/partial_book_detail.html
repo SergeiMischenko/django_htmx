@@ -23,12 +23,18 @@
 	<td>
 		{% if not book.read %}
 			<!-- Кнопка "Unread" -->
-			<button class="disbtn">
+			<button class="disbtn"
+			        hx-put="{% url 'update_book_status' book.id %}"
+			        hx-target="closest tr"
+			        hx-swap="outerHTML">
 				Unread
 			</button>
 		{% else %}
 			<!-- Кнопка "Read" -->
-			<button class="disbtn">
+			<button class="disbtn"
+			        hx-put="{% url 'update_book_status' book.id %}"
+			        hx-target="closest tr"
+			        hx-swap="outerHTML">
 				Read
 			</button>
 		{% endif %}
