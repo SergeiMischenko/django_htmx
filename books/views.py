@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_http_methods
 
@@ -38,3 +39,10 @@ def update_book_details(request, pk):
 def book_detail(request, pk):
     book = get_object_or_404(Book, pk=pk)
     return render(request, "partial_book_detail.html", {"book": book})
+
+
+@require_http_methods(["DELETE"])
+def delete_book(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    book.delete()
+    return HttpResponse()
